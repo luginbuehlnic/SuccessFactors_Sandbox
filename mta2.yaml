@@ -1,7 +1,7 @@
 _schema-version: '3.1'
 ID: SuccessFacotor_API_IPA
 version: 1.0.0
-description: "A simple CAP project."
+description: "IPA SuccessFactors API"
 parameters:
   enable-parallel-deployments: true
 build-parameters:
@@ -22,8 +22,8 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: SuccessFacotor_API_IPA-auth
       - name: SuccessFacotor_API_IPA-db
+      - name: SuccessFacotor_API_IPA-auth
 
   - name: SuccessFacotor_API_IPA-db-deployer
     type: hdb
@@ -34,6 +34,11 @@ modules:
       - name: SuccessFacotor_API_IPA-db
 
 resources:
+  - name: SuccessFacotor_API_IPA-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
   - name: SuccessFacotor_API_IPA-auth
     type: org.cloudfoundry.managed-service
     parameters:
@@ -43,8 +48,3 @@ resources:
       config:
         xsappname: SuccessFacotor_API_IPA-${org}-${space}
         tenant-mode: dedicated
-  - name: SuccessFacotor_API_IPA-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
